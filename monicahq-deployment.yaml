@@ -1,0 +1,143 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.1.0 (36652f6)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: monicahq
+  name: monicahq
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: monicahq
+    spec:
+      containers:
+      - env:
+        - name: ALLOW_STATISTICS_THROUGH_PUBLIC_API_ACCESS
+          value: "false"
+        - name: APP_DEBUG
+          value: "false"
+        - name: APP_DEFAULT_LOCALE
+          value: en
+        - name: APP_DISABLE_SIGNUP
+          value: "true"
+        - name: APP_EMAIL_NEW_USERS_NOTIFICATION
+          value: EmailThatWillSendNotificationsForNewUser
+        - name: APP_ENV
+          value: production
+        - name: APP_KEY
+          value: ChangeMeToA32bitString
+        - name: APP_SIGNUP_DOUBLE_OPTIN
+          value: "false"
+        - name: APP_TRUSTED_CLOUDFLARE
+          value: "false"
+        - name: APP_TRUSTED_PROXIES
+        - name: APP_URL
+          value: http://monica.lab.powerninjas.net
+        - name: AWS_BUCKET
+        - name: AWS_KEY
+        - name: AWS_REGION
+          value: us-east-1
+        - name: AWS_SECRET
+        - name: AWS_SERVER
+        - name: CACHE_DRIVER
+          value: database
+        - name: CHECK_VERSION
+          value: "true"
+        - name: DB_CONNECTION
+          value: mysql
+        - name: DB_DATABASE
+          value: monica
+        - name: DB_HOST
+          value: mysql
+        - name: DB_PASSWORD
+          value: ChangeMeToAStrongPassword
+        - name: DB_PORT
+          value: "3306"
+        - name: DB_PREFIX
+        - name: DB_TEST_DATABASE
+          value: monica_test
+        - name: DB_TEST_HOST
+          value: mysql
+        - name: DB_TEST_PASSWORD
+          value: ChangeMeToAStrongPassword
+        - name: DB_TEST_USERNAME
+          value: homestead
+        - name: DB_USERNAME
+          value: homestead
+        - name: DB_USE_UTF8MB4
+          value: "true"
+        - name: DEFAULT_FILESYSTEM
+          value: public
+        - name: DEFAULT_MAX_UPLOAD_SIZE
+          value: "10240"
+        - name: HASH_LENGTH
+          value: "18"
+        - name: HASH_SALT
+          value: ChangeMeBy20+KeyLength
+        - name: LOG_CHANNEL
+          value: daily
+        - name: MAIL_DRIVER
+          value: smtp
+        - name: MAIL_ENCRYPTION
+          value: "null"
+        - name: MAIL_FROM_ADDRESS
+          value: me@me.me
+        - name: MAIL_FROM_NAME
+          value: '"Me"'
+        - name: MAIL_HOST
+          value: maildev
+        - name: MAIL_PASSWORD
+          value: "null"
+        - name: MAIL_PORT
+          value: "25"
+        - name: MAIL_USERNAME
+          value: "null"
+        - name: MFA_ENABLED
+          value: "false"
+        - name: MOBILE_CLIENT_ID
+        - name: MOBILE_CLIENT_SECRET
+        - name: NUMBER_OF_ALLOWED_CONTACTS_FREE_ACCOUNT
+          value: "10"
+        - name: PAID_PLAN_ANNUAL_FRIENDLY_NAME
+        - name: PAID_PLAN_ANNUAL_ID
+        - name: PAID_PLAN_ANNUAL_PRICE
+        - name: PAID_PLAN_MONTHLY_FRIENDLY_NAME
+        - name: PAID_PLAN_MONTHLY_ID
+        - name: PAID_PLAN_MONTHLY_PRICE
+        - name: POLICY_COMPLIANT
+          value: "true"
+        - name: QUEUE_DRIVER
+          value: sync
+        - name: REQUIRES_SUBSCRIPTION
+          value: "false"
+        - name: SENTRY_LARAVEL_DSN
+        - name: SENTRY_SUPPORT
+          value: "false"
+        - name: SESSION_DRIVER
+          value: file
+        - name: SESSION_LIFETIME
+          value: "120"
+        - name: STRIPE_KEY
+        - name: STRIPE_SECRET
+        image: monicahq/monicahq
+        name: monicahq
+        ports:
+        - containerPort: 80
+        resources: {}
+        volumeMounts:
+        - mountPath: /var/www/monica/storage
+          name: monicahq-claim0
+      restartPolicy: Always
+      volumes:
+      - name: monicahq-claim0
+        persistentVolumeClaim:
+          claimName: monicahq-claim0
+status: {}
